@@ -46,6 +46,7 @@ flex_SOURCES = \
 	$(COMMON_SOURCES)
 
 nodist_flex_SOURCES = \
+	cpp-skel.h \
 	stage1scan.c
 
 flex_CFLAGS = $(AM_CFLAGS) $(WARNINGFLAGS)
@@ -54,7 +55,6 @@ COMMON_SOURCES = \
 	buf.c \
 	ccl.c \
 	cpp_backend.c \
-	cpp_skel.h \
 	dfa.c \
 	ecs.c \
 	filter.c \
@@ -93,9 +93,11 @@ EXTRA_DIST = \
 	mkskel.sh \
 	gettext.h
 
-CLEANFILES = stage1scan.c stage1flex$(EXEEXT)
+CLEANFILES = stage1scan.c stage1flex$(EXEEXT) cpp-skel.h
 
 MAINTAINERCLEANFILES = c9pp-skel.h
+
+flex-cpp_backend.$(OBJEXT): cpp-skel.h
 
 cpp-skel.h: cpp-flex.skl mkskel.sh flexint_shared.h tables_shared.h tables_shared.c
 	$(SHELL) $(srcdir)/mkskel.sh cpp $(srcdir) $(m4) $(VERSION) > $@.tmp
